@@ -117,22 +117,30 @@
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
             const container = document.getElementById("player-container");
-            container.appendChild(player);
+            const overlay = document.getElementById("overlay");
+            const btn = document.getElementById("start-button");
 
-            player.load({
-                url: "fightnight.swf",
-                allowScriptAccess: "always",
-                wmode: "opaque",
-                autoplay: "on",
-                unmuteOverlay: "visible",
-                backgroundColor: "#000000",
-                width: 800,
-                height: 600
+            // Ensure proper sizing immediately so it doesn't look broken
+            player.style.width = "100%";
+            player.style.height = "100%";
+
+            btn.addEventListener("click", () => {
+                console.log("Start button clicked");
+                // Hide overlay
+                overlay.style.display = "none";
+
+                // Add player and load
+                container.appendChild(player);
+
+                player.load({
+                    url: "fightnight.swf",
+                    allowScriptAccess: "always",
+                    wmode: "window",
+                    autoplay: "on",
+                    unmuteOverlay: "hidden",
+                    backgroundColor: "#000000",
+                });
             });
-
-            // Ensure proper sizing
-            player.style.width = "800px";
-            player.style.height = "600px";
         });
     </script>
 </body>
