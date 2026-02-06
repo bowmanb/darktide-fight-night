@@ -37,8 +37,8 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
-            background: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5eXl6eXl6eXl6eXl6eXl6eXl6eO/giphy.gif') center/cover no-repeat, #333;
-            /* Fallback/Placeholder */
+            background: #222;
+            /* Simple dark background */
         }
 
         #start-button {
@@ -135,10 +135,13 @@
                 player.load({
                     url: "fightnight.swf",
                     allowScriptAccess: "always",
+                    allowNetworking: "all",
                     wmode: "window",
                     autoplay: "on",
                     unmuteOverlay: "hidden",
                     backgroundColor: "#000000",
+                    letterbox: "on",
+                    logLevel: "warn",
                 });
             });
         });
