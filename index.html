@@ -48,10 +48,7 @@
 </head>
 
 <body>
-    <div id="player-container">
-        <!-- Ruffle will polyfill this embed tag -->
-        <embed src="fightnight.swf" width="800" height="600" wmode="window" allowFullscreen="true">
-    </div>
+    <div id="player-container"></div>
 
     <div id="info-container">
         <h1>Asheron's Call - Darktide Fight Night</h1>
@@ -72,6 +69,30 @@
     </div>
 
     <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    <script>
+        window.RufflePlayer = window.RufflePlayer || {};
+        window.addEventListener("load", (event) => {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            const container = document.getElementById("player-container");
+            container.appendChild(player);
+
+            player.load({
+                url: "fightnight.swf",
+                allowScriptAccess: "always",
+                wmode: "opaque",
+                autoplay: "on",
+                unmuteOverlay: "visible",
+                backgroundColor: "#000000",
+                width: 800,
+                height: 600
+            });
+
+            // Ensure proper sizing
+            player.style.width = "800px";
+            player.style.height = "600px";
+        });
+    </script>
 </body>
 
 </html>
