@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fight Night - Asheron's Call Darktide</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #ccc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #player-container {
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #info-container {
+            max-width: 800px;
+            margin: 20px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        strong {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="player-container">
+        <!-- Ruffle will polyfill this embed tag -->
+        <embed src="fightnight.swf" width="800" height="600" wmode="window" allowFullscreen="true">
+    </div>
+
+    <div id="info-container">
+        <h1>Asheron's Call - Darktide Fight Night</h1>
+        <p>
+            This Flash file is a preserved artifact from the community of <strong>Asheron's Call</strong>, specifically
+            the <strong>Darktide</strong> server.
+        </p>
+        <p>
+            Darktide was unique among Asheron's Call servers as a dedicated PvP (Player vs Player) environment. Unlike
+            the PvE servers, Darktide allowed players to attack each other almost anywhere in the game world, with full
+            loot drop mechanics upon death. This created a harsh, competitive, and highly political atmosphere.
+        </p>
+        <p>
+            "Fight Nights" were often community-organized events where players and guilds (allegiances) would gather to
+            settle scores, hold tournaments, or simply engage in chaotic free-for-all combat. These events were a staple
+            of the server's culture, often recorded and shared by players.
+        </p>
+    </div>
+
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+</body>
+
+</html>
