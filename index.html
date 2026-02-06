@@ -65,6 +65,9 @@
             margin-top: 10px;
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 800px;
         }
 
         .debug-btn {
@@ -114,7 +117,11 @@
 
     <!-- Debug Controls -->
     <div id="debug-controls">
-        <button id="force-play-btn" class="debug-btn">Force Play (Skip Menu)</button>
+        <button id="log-status-btn" class="debug-btn">Log Status</button>
+        <button id="play-btn" class="debug-btn">Play()</button>
+        <button id="next-frame-btn" class="debug-btn">Next Frame (+1)</button>
+        <button id="frame-10-btn" class="debug-btn">Goto Frame 10</button>
+        <button id="frame-50-btn" class="debug-btn">Goto Frame 50</button>
     </div>
 
     <div id="info-container">
@@ -144,7 +151,6 @@
             const container = document.getElementById("player-container");
             const overlay = document.getElementById("overlay");
             const btn = document.getElementById("start-button");
-            const forcePlayBtn = document.getElementById("force-play-btn");
 
             player.style.width = "100%";
             player.style.height = "100%";
@@ -168,17 +174,48 @@
             });
 
             // Debug logic
-            forcePlayBtn.addEventListener("click", () => {
-                console.log("Attempting Force Play...");
-                if (player.Play) {
-                    player.Play();
-                    console.log("Called player.Play()");
-                } else if (player.play) {
-                    player.play();
-                    console.log("Called player.play()");
-                } else {
-                    console.warn("No Play method found on player object", player);
+            const bindBtn = (id, fn) => {
+                document.getElementById(id).addEventListener("click", fn);
+            };
+
+            bindBtn("log-status-btn", () => {
+                console.log("--- Player Status ---");
+                // Try various potential properties
+                try { console.log("CurrentFrame:", player.CurrentFrame ? player.CurrentFrame() : "N/A"); } catch (e) { console.log("CurrentFrame err", e); }
+                try { console.log("TotalFrames:", player.TotalFrames ? player.TotalFrames() : "N/A"); } catch (e) { console.log("TotalFrames err", e); }
+                try { console.log("IsPlaying:", player.IsPlaying ? player.IsPlaying() : "N/A"); } catch (e) { console.log("IsPlaying err", e); }
+                console.log("Player object keys:", Object.keys(player));
+                console.log("---------------------");
+            });
+
+            bindBtn("play-btn", () => {
+                console.log("Call Play()");
+                if (player.Play) player.Play();
+                if (player.play) player.play();
+            });
+
+            bindBtn("next-frame-btn", () => {
+                console.log("Call NextFrame()");
+                // Ruffle might not expose NextFrame directly, used TCallLabel or similar in ancient times
+                // Or just Play() is the only standard one. 
+                // Let's try to get current frame and +1
+                try {
+                    const cur = player.CurrentFrame();
+                    console.log("Current frame:", cur);
+                    player.GotoFrame(cur + 1);
+                } catch (e) {
+                    console.log("NextFrame logic failed:", e);
                 }
+            });
+
+            bindBtn("frame-10-btn", () => {
+                console.log("Goto Frame 10");
+                try { player.GotoFrame(10); } catch (e) { console.error(e); }
+            });
+
+            bindBtn("frame-50-btn", () => {
+                console.log("Goto Frame 50");
+                try { player.GotoFrame(50); } catch (e) { console.error(e); }
             });
         });
     </script>
