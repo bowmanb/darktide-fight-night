@@ -38,7 +38,6 @@
             align-items: center;
             z-index: 10;
             background: #222;
-            /* Simple dark background */
         }
 
         #start-button {
@@ -59,6 +58,27 @@
         #start-button:hover {
             background: #a00000;
             transform: scale(1.05);
+        }
+
+        /* Debug Button Styles */
+        #debug-controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .debug-btn {
+            background: #444;
+            color: #ddd;
+            border: 1px solid #666;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .debug-btn:hover {
+            background: #555;
         }
 
         #info-container {
@@ -92,6 +112,11 @@
         </div>
     </div>
 
+    <!-- Debug Controls -->
+    <div id="debug-controls">
+        <button id="force-play-btn" class="debug-btn">Force Play (Skip Menu)</button>
+    </div>
+
     <div id="info-container">
         <h1>Asheron's Call - Darktide Fight Night</h1>
         <p>
@@ -119,17 +144,14 @@
             const container = document.getElementById("player-container");
             const overlay = document.getElementById("overlay");
             const btn = document.getElementById("start-button");
+            const forcePlayBtn = document.getElementById("force-play-btn");
 
-            // Ensure proper sizing immediately so it doesn't look broken
             player.style.width = "100%";
             player.style.height = "100%";
 
             btn.addEventListener("click", () => {
                 console.log("Start button clicked");
-                // Hide overlay
                 overlay.style.display = "none";
-
-                // Add player and load
                 container.appendChild(player);
 
                 player.load({
@@ -143,6 +165,20 @@
                     letterbox: "on",
                     logLevel: "warn",
                 });
+            });
+
+            // Debug logic
+            forcePlayBtn.addEventListener("click", () => {
+                console.log("Attempting Force Play...");
+                if (player.Play) {
+                    player.Play();
+                    console.log("Called player.Play()");
+                } else if (player.play) {
+                    player.play();
+                    console.log("Called player.play()");
+                } else {
+                    console.warn("No Play method found on player object", player);
+                }
             });
         });
     </script>
